@@ -17,6 +17,11 @@ OSX/Linux users can quickly set up by running
 source .venv/bin/activate
 ```
 
+then
+```sh
+python -m jupyter notebook
+```
+
 For a more detailed guide, please check out the
 [contributing document](./CONTRIBUTING.md).
 
