@@ -3,8 +3,9 @@
 import sys
 from pathlib import Path
 
-NB_ROOT = 'notebooks'
-NB_PATHS_LIST = './tests/notebook_paths.txt'
+NB_ROOT = "notebooks"
+NB_PATHS_LIST = "./tests/notebook_paths.txt"
+
 
 def parse_args(argv):
     """Parses sys.argv to find notebook paths and switches, otherwise gets
@@ -16,14 +17,14 @@ def parse_args(argv):
     """
     argv = argv[1:] if len(argv) > 1 else []
 
-    switches = {a for a in argv if a.startswith('--')}
+    switches = {a for a in argv if a.startswith("--")}
     filepaths = [a for a in argv if a not in switches]
     if not filepaths:
         # No files passed; read from text file
-        with open(NB_PATHS_LIST, encoding='utf-8') as f:
+        with open(NB_PATHS_LIST, encoding="utf-8") as f:
             for path in f:
                 path = path.strip()
-                if path == '' or path.startswith('#'):
+                if path == "" or path.startswith("#"):
                     continue
                 filepaths.append(path)
 
@@ -31,7 +32,7 @@ def parse_args(argv):
     for idx, path in enumerate(filepaths):
         path = Path(path)
         if not path.suffix:
-            path = path.with_suffix('.ipynb')
+            path = path.with_suffix(".ipynb")
 
         if not path.exists():
             path = Path(NB_ROOT) / path
@@ -42,23 +43,23 @@ def parse_args(argv):
 
 
 TSTYLE = {  # Terminal styling codes
-    'bold': '\033[1m',
-    'faint': '\033[30m',
-    'suggestion': '\033[94m',
-    'warning': '\033[93m',
-    'error': '\033[91m',
-    'success': '\033[32m',
-    'end': '\033[0m'
+    "bold": "\033[1m",
+    "faint": "\033[30m",
+    "suggestion": "\033[94m",
+    "warning": "\033[93m",
+    "error": "\033[91m",
+    "success": "\033[32m",
+    "end": "\033[0m",
 }
 
 
 def style(style, text):
     """Style string using terminal escape codes"""
-    return  f"{TSTYLE[style]}{text}{TSTYLE['end']}"
+    return f"{TSTYLE[style]}{text}{TSTYLE['end']}"
 
 
 def indent(s):
     """Indent text block with vertical line margins"""
-    s = s.replace('\n', '\n' + style('faint', '│ '))
-    s = s[::-1].replace('│', '╵', 1)[::-1]
-    return style('faint', '╷ ') + s
+    s = s.replace("\n", "\n" + style("faint", "│ "))
+    s = s[::-1].replace("│", "╵", 1)[::-1]
+    return style("faint", "╷ ") + s
