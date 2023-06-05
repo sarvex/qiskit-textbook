@@ -109,11 +109,11 @@ exercises = [
     
     
 def run_puzzle(j):
-    puzzle = hello_quantum.run_game(exercises[j]['initialize'],
-                           exercises[j]['success_condition'],
-                           exercises[j]['allowed_gates'],
-                           exercises[j]['vi'],
-                           qubit_names=exercises[j]['qubit_names'],
-                           mode=exercises[j]['mode']
-                          )
-    return puzzle
+    return hello_quantum.run_game(
+        exercises[j]['initialize'],
+        exercises[j]['success_condition'],
+        exercises[j]['allowed_gates'],
+        exercises[j]['vi'],
+        qubit_names=exercises[j]['qubit_names'],
+        mode=exercises[j]['mode'],
+    )

@@ -16,7 +16,7 @@ def check_exists(path):
 
 def check_resource(resource):
     for key in resource.keys():
-        if not key in ['title', 'description', 'link', 'author']:
+        if key not in ['title', 'description', 'link', 'author']:
             raise AssertionError(
                     f"'{key}' not in resource:\n{resource}.\n\n"
                     "Please edit this resouce in {TOC_PATH} to include a value "
@@ -55,10 +55,10 @@ if __name__ == '__main__':
 
     referenced_notebooks = []
     for course in toc:
-        for section in course['sections']:
-            referenced_notebooks.append(
-                Path(f"notebooks/{section['url']}.ipynb")
-            )
+        referenced_notebooks.extend(
+            Path(f"notebooks/{section['url']}.ipynb")
+            for section in course['sections']
+        )
     for notebook in Path('notebooks').rglob('*.ipynb'):
         if notebook not in referenced_notebooks:
             if notebook.stem.startswith('_'):

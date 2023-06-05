@@ -24,10 +24,7 @@ def timestr():
 
 
 def contains_code_cells(notebook):
-    for cell in notebook.cells:
-        if cell.cell_type == 'code':
-            return True
-    return False
+    return any(cell.cell_type == 'code' for cell in notebook.cells)
 
 
 def format_message_terminal(msg):
@@ -140,11 +137,11 @@ if __name__ == '__main__':
 
     write, fail_on_warning = False, False
     for switch in switches:
-        if switch == '--write':
-            write = True
         if switch == '--fail-on-warning':
             fail_on_warning = True
 
+        elif switch == '--write':
+            write = True
     log = {'t0': time.time(),
             'total_time': 0,
             'total_files': 0,
