@@ -16,20 +16,12 @@ def parse_args(argv):
     """
     argv = argv[1:] if len(argv) > 1 else []
 
-    switches = set()
-    for a in argv:
-        if a.startswith('--'):
-            switches.add(a)
-    
-    filepaths = []
-    for a in argv:
-        if a not in switches:
-            filepaths.append(a)
-
-    if filepaths == []:
+    switches = {a for a in argv if a.startswith('--')}
+    filepaths = [a for a in argv if a not in switches]
+    if not filepaths:
         # No files passed; read from text file
         with open(NB_PATHS_LIST, encoding='utf-8') as f:
-            for path in f.readlines():
+            for path in f:
                 path = path.strip()
                 if path == '' or path.startswith('#'):
                     continue
@@ -38,7 +30,7 @@ def parse_args(argv):
     # Make all paths of form ./notebook_root/folder/notebook.ipynb
     for idx, path in enumerate(filepaths):
         path = Path(path)
-        if path.suffix == '':
+        if not path.suffix:
             path = path.with_suffix('.ipynb')
 
         if not path.exists():
